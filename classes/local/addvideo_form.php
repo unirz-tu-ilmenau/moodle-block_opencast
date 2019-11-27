@@ -32,6 +32,7 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG;
 
 require_once($CFG->dirroot . '/lib/formslib.php');
+require_once($CFG->dirroot . "/blocks/opencast/form/filepicker_opencast.php");
 
 class addvideo_form extends \moodleform {
 
@@ -91,12 +92,14 @@ class addvideo_form extends \moodleform {
 
         $mform->addElement('header', 'upload_filepicker', get_string('upload', 'block_opencast'));
         
-            $mform->addElement('filepicker', 'video_presenter',
-                get_string('presenter', 'block_opencast'), null,array('accepted_types' => array('*')));
+            $mform->addElement('filepicker_opencast', 'video_presenter',
+                get_string('presenter', 'block_opencast'), null,array('accepted_types' => array('*'),
+                    'maxbytes' => get_config('block_opencast', 'uploadfilelimit')));
             $mform->addElement('static', 'presenterdesc', null, get_string('presenterdesc', 'block_opencast'));
 
-            $mform->addElement('filepicker', 'video_presentation',
-                get_string('presentation', 'block_opencast'), null, array('accepted_types' => array('*')));
+            $mform->addElement('filepicker_opencast', 'video_presentation',
+                get_string('presentation', 'block_opencast'), null, array('accepted_types' => array('*'),
+                    'maxbytes' => get_config('block_opencast', 'uploadfilelimit')));
             $mform->addElement('static', 'presentationdesc', null, get_string('presentationdesc', 'block_opencast'));
 
             $util = new core_form\filetypes_util();
